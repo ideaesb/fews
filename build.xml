@@ -1,0 +1,34 @@
+<project name="fews" default="dist" basedir=".">
+  <description>
+    simple build file to recompile after modifying generated sources to add @XmlRootElement
+  	to the TimeSeriesCollectionComplexType class
+  </description>
+
+  <!-- set global properties for this build -->
+  <property name="src" value="src/main/java"/>
+  <property name="classes" value="target/classes"/>
+  <property name="dist" value="fewsWithXmlRootElement-1.0"/>
+	
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${classes}"/>
+  </target>
+
+  <target name="compile" depends="init" description="compile the source">
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" destdir="${classes}"/>
+  </target>
+
+  <target name="dist" depends="compile" description="generate the distribution">
+    <jar jarfile="target/${dist}.jar" basedir="${classes}"/>
+  </target>
+
+  <target name="clean"
+        description="clean up">
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${classes}"/>
+    <delete dir="target/${dist}.jar"/>
+  </target>
+</project>
